@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import environ
 from pathlib import Path
+
+env = environ.Env()
+environ.Env().read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'core',
     'finances'
 ]
 
@@ -83,8 +88,12 @@ WSGI_APPLICATION = 'finapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres', 
+        'USER': env('DATABASE_USER'), 
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': '127.0.0.1', 
+        'PORT': '5432',
     }
 }
 
