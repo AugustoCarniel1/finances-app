@@ -17,8 +17,8 @@ class SignIn extends React.Component {
         this.submit = this.submit.bind(this)
     }
 
-    changeValue(e, type) {
-        console.log(e)
+    changeValue(e) {
+        console.log(e.target.value, this.state.cpf)
         this.setState({
             [e.target.id]: e.target.value
         })
@@ -52,12 +52,12 @@ class SignIn extends React.Component {
                 <section className="container">
                     <div className="register-box">
                         <h1 className="title">Cadastro</h1>
-                        <BasicTextInput labelName='Nome Completo' type='text' inputId='name' changeValue={(e, type) => this.changeValue(e, type)} />
-                        <BasicTextInput labelName='Email' type='email' inputId='email' changeValue={(e, type) => this.changeValue(e, type)} />
-                        <BasicTextInput labelName='Senha' type='text' inputId='password' changeValue={(e, type) => this.changeValue(e, type)} />
-                        <BasicTextInput labelName='Confirmar Senha' type='text' inputId='confirmPassword' changeValue={(e, type) => this.changeValue(e, type)} />
-                        <BasicTextInput labelName='CPF' type='text' inputId='cpf' changeValue={(e, type) => this.changeValue(e, type)} />
-                        <BasicTextInput labelName='Telefone' type='text' inputId='phone' changeValue={(e, type) => this.changeValue(e, type)} />
+                        <BasicTextInput labelName='Nome Completo' placeholder='Insira seu nome completo...' type='text' inputId='name' changeValue={(e, type) => this.changeValue(e, type)} />
+                        <BasicTextInput labelName='Email' placeholder='Insira seu email...' type='email' inputId='email' changeValue={(e, type) => this.changeValue(e, type)} />
+                        <BasicTextInput labelName='Senha' placeholder='Insira sua senha...' type='text' inputId='password' changeValue={(e, type) => this.changeValue(e, type)} />
+                        <BasicTextInput labelName='Confirmar Senha' placeholder='Insira sua senha novamente...' type='text' inputId='confirmPassword' changeValue={(e, type) => this.changeValue(e, type)} />
+                        <BasicTextInput labelName='CPF' placeholder='000.000.000-00' type='cpf' inputId='cpf' value={this.state.cpf} changeValue={(e, type) => this.changeValue(e, type)} />
+                        {/* <BasicTextInput labelName='Telefone' type='phone' inputId='phone' changeValue={(e, type) => this.changeValue(e, type)} /> */}
                         <BasicTextInput labelName='Data de Nascimento' type='date' inputId='birthDate' changeValue={(e, type) => this.changeValue(e, type)} />
                         <Row>
                             <Col>
