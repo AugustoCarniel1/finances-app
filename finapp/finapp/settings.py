@@ -10,15 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import environ
-from pathlib import Path
+import os
 
-env = environ.Env()
-environ.Env().read_env()
+from dotenv import load_dotenv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -59,7 +55,9 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
+    'http://localhost',
+    'http://127.0.0.1',
+    'http://0.0.0.0'
 ]
 
 ROOT_URLCONF = 'finapp.urls'
@@ -89,13 +87,23 @@ WSGI_APPLICATION = 'finapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres', 
-        'USER': env('DATABASE_USER'), 
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': '127.0.0.1', 
+        'NAME': 'dockerteste',
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': 'database',
         'PORT': '5432',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'dockerteste',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Monaliza@22',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation

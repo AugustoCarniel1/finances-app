@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { Row, Col, Button } from "react-bootstrap";
+
+
 class Home extends React.Component {
     constructor(props) {
         super(props)
@@ -11,7 +14,11 @@ class Home extends React.Component {
     render(){
         return(
             <div className="main">
-                Hello
+                <Row>
+                    <Col>
+                        <Button onClick={this.submit}>Registrar</Button>                            
+                    </Col>
+                </Row>
             </div>
         )
     }

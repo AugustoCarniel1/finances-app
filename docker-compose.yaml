@@ -1,0 +1,95 @@
+# version: "3"
+
+# services:
+#   database:
+#     container_name: database
+#     networks:
+#       - djangonetwork
+#     image: postgres:12.7-alpine
+#     expose:
+#       - "5432"
+#     volumes:
+#       - ./backup_data/db:/var/lib/postgresql/data
+#     environment:
+#       - POSTGRES_DB=dockerteste
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=pw1234
+
+#   backend:
+#     build: ./finapp
+#     command: >
+#       sh -c "python manage.py collectstatic --noinput &&
+#              python manage.py migrate &&
+#              python manage.py runserver 0.0.0.0:8000"
+#     volumes:
+#       - ./finapp:/app
+#     depends_on:
+#       - database
+#     networks:
+#       - djangonetwork
+  
+#   frontend:
+#     build: ./frontend
+#     volumes:
+#       - ./frontend:/app/frontend
+#     depends_on:
+#       - backend
+#     ports:
+#       - 80:80
+  
+#   nginx_backend_server:
+#     build: ./nginx
+#     ports:
+#       - 8000:8000
+#     depends_on:
+#       - backend
+
+# networks:
+#   djangonetwork:
+#     driver: bridge
+
+
+
+version: "3"
+
+services:
+  database:
+    container_name: database
+    image: postgres:12.7-alpine
+    expose:
+      - "5432"
+    volumes:
+      - psql:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=dockerteste
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Monaliza@22
+
+  backend:
+    build: ./finapp
+    command: gunicorn finapp.wsgi --bind 0.0.0.0:8000
+    ports:
+      - '8000:8000'
+    depends_on:
+      - database
+  
+  frontend:
+    build: ./frontend
+    volumes:
+      - frontend_build:/frontend/build
+    stdin_open: true
+  
+  nginx:
+    build: ./nginx
+    image: nginx:1.19
+    ports:
+      - 80:8080
+    volumes:
+      - frontend_build:/var/www/frontend
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  frontend_build:
+  psql:

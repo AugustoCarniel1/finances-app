@@ -2,7 +2,7 @@ import React from "react";
 
 import { Row, Col } from "react-bootstrap";
 
-import { cpfMask } from "../utils/string.js";
+// import { cpfMask } from "../utils/string.js";
 
 class BasicTextInput extends React.Component {
     constructor(props) {
@@ -39,7 +39,7 @@ class BasicTextInput extends React.Component {
                 </>
             : ['cpf', 'phone'].includes(this.props.type) ?
                 <>
-                    <Row>
+                    {/* <Row>
                         <Col md={12}>
                             <InputMask 
                                 {...this.props}
@@ -49,7 +49,7 @@ class BasicTextInput extends React.Component {
                                 onChange={(e) => this.props.changeValue(cpfMask(e), this.props.type)}
                             />
                         </Col>
-                    </Row>  
+                    </Row>   */}
                 </> 
             : <></> }
         </>
