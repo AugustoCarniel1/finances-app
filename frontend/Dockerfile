@@ -1,6 +1,13 @@
-FROM node:18.13.0
+FROM node:lts-slim
 
-WORKDIR /frontend
-ENV PATH="./node_modules/.bin:$PATH"
-COPY . .
-RUN npm run build
+WORKDIR /app/
+
+COPY package.json /app/
+COPY package-lock.json /app/
+RUN npm ci
+
+COPY . /app/
+
+EXPOSE 3000
+
+CMD npm start

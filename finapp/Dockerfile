@@ -1,27 +1,17 @@
-# FROM python:3.9.13
+FROM python:3.8.8-slim
 
-# ENV PYTHONDONTWRITEBYTECODE 1
-# ENV PYTHONUNBUFFERED 1
-
-# COPY . /app
-# WORKDIR /app
-
-# RUN pip3 install -r requirements.txt
-# # RUN python manage.py makemigrations
-# # RUN python manage.py migrate
-
-# CMD gunicorn -b 0.0.0.0:8000 --worker-class=gevent --worker-connections=1000 --workers=5 finapp.wsgi
-
-
-
-FROM python:3.9.13
+WORKDIR /usr/src/app
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /django
-COPY requirements.txt requirements.txt
+RUN apt-get update \
+   && apt-get install -y python3-dev gcc musl-dev libffi-dev netcat
 
-RUN pip3 install -r requirements.txt
+RUN pip install --upgrade pip
+COPY ./requirements ./requirements
+RUN pip install -r requirements/local.txt
 
 COPY . .
+
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
